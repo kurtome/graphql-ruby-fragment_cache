@@ -22,6 +22,8 @@ module GraphQL
     class << self
       attr_reader :cache_store
 
+      attr_accessor :skip_cache_when_query_has_errors
+
       def use(schema_defn, options = {})
         verify_interpreter!(schema_defn)
 
@@ -44,6 +46,8 @@ module GraphQL
         @cache_store = store
       end
 
+      alias skip_cache_when_query_has_errors? skip_cache_when_query_has_errors
+
       private
 
       def verify_interpreter!(schema_defn)
@@ -60,6 +64,7 @@ module GraphQL
     end
 
     self.cache_store = MemoryStore.new
+    self.skip_cache_when_query_has_errors = false
   end
 end
 
